@@ -6,7 +6,7 @@ import Tesseract from 'tesseract.js';
 function App() {
   const [imagePath, setImagePath] = useState("");
   const [text, setText] = useState("");
-
+  const [aaa, setAaa] = useState("");
   const handleChange = (event) => {
     setImagePath(URL.createObjectURL(event.target.files[0]));
   }
@@ -14,7 +14,7 @@ function App() {
   const handleClick = () => {
 
     Tesseract.recognize(
-      imagePath, 'eng',
+      imagePath, 'vie',
       {
         logger: m => console.log(m)
       }
@@ -31,7 +31,7 @@ function App() {
         console.log("confidence: ", confidence);
         console.log("text: ", text)
         setText(result.data.text);
-
+        setAaa(result.data.hocr);
       })
   }
 
@@ -45,7 +45,9 @@ function App() {
         <h3>Extracted text</h3>
         <div className="text-box">
           <p> {text} </p>
+
         </div>
+        <div dangerouslySetInnerHTML={{ __html: aaa }} />
         <input type="file" onChange={handleChange} />
         <button onClick={handleClick} style={{ height: 50 }}> convert to text</button>
       </main>
